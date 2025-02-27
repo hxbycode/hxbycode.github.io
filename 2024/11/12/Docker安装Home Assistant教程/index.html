@@ -1,0 +1,729 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/title.png">
+  <link rel="icon" href="/img/title.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Hx">
+  <meta name="keywords" content="Hx">
+  
+    <meta name="description" content="Docker安装Home Assistant教程1、引言 在智能家居领域，Home Assistant是一款非常受欢迎的开源自动化平台，它能将各种智能设备集成在一起，实现统一控制和自动化场景设置。而Docker作为一种容器化技术，为安装和部署Home Assistant提供了便捷、高效的方式。本文将详细介绍如何使用Docker安装Home Assistant。 2、Docker安装Home Ass">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker安装Home Assistant教程">
+<meta property="og:url" content="https://chinahxcode.github.io/2024/11/12/Docker%E5%AE%89%E8%A3%85Home%20Assistant%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="HX">
+<meta property="og:description" content="Docker安装Home Assistant教程1、引言 在智能家居领域，Home Assistant是一款非常受欢迎的开源自动化平台，它能将各种智能设备集成在一起，实现统一控制和自动化场景设置。而Docker作为一种容器化技术，为安装和部署Home Assistant提供了便捷、高效的方式。本文将详细介绍如何使用Docker安装Home Assistant。 2、Docker安装Home Ass">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qnam.smzdm.com/202412/24/676a6f5e8f0123424.jpg_e1080.jpg">
+<meta property="og:image" content="https://am.zdmimg.com/202412/24/676a7025444501671.jpg_e1080.jpg">
+<meta property="og:image" content="https://qnam.smzdm.com/202412/24/676a7042b59af4263.jpg_e1080.jpg">
+<meta property="og:image" content="https://qnam.smzdm.com/202412/24/676a708c32fb1187.jpg_e1080.jpg">
+<meta property="og:image" content="https://am.zdmimg.com/202412/24/676a7017382ca7581.jpg_e1080.jpg">
+<meta property="og:image" content="https://am.zdmimg.com/202412/24/676a7115ac848807.jpg_e1080.jpg">
+<meta property="og:image" content="https://am.zdmimg.com/202412/24/676a714fa4b5a7595.jpg_e1080.jpg">
+<meta property="og:image" content="https://am.zdmimg.com/202412/24/676a71801d4b28454.jpg_e1080.jpg">
+<meta property="og:image" content="https://qnam.smzdm.com/202412/24/676a7198af1fe8705.jpg_e1080.jpg">
+<meta property="og:image" content="https://qnam.smzdm.com/202412/24/676a71d870e261860.jpg_e1080.jpg">
+<meta property="og:image" content="https://qnam.smzdm.com/202412/24/676a71ec8493b4544.jpg_e1080.jpg">
+<meta property="og:image" content="https://qnam.smzdm.com/202412/24/676a723dec8ea2034.jpg_e1080.jpg">
+<meta property="og:image" content="https://qnam.smzdm.com/202412/24/676a723d28b072034.jpg_e1080.jpg">
+<meta property="og:image" content="https://am.zdmimg.com/202412/24/676a72b799b897547.jpg_e1080.jpg">
+<meta property="og:image" content="https://am.zdmimg.com/202412/24/676a72e386f506656.jpg_e1080.jpg">
+<meta property="article:published_time" content="2024-11-12T11:56:31.000Z">
+<meta property="article:modified_time" content="2025-02-27T07:13:30.360Z">
+<meta property="article:author" content="Hx">
+<meta property="article:tag" content="HA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qnam.smzdm.com/202412/24/676a6f5e8f0123424.jpg_e1080.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Docker安装Home Assistant教程 - HX</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"chinahxcode.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>HX</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Docker安装Home Assistant教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-11-12 19:56" pubdate>
+          2024年11月12日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Docker安装Home Assistant教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Docker安装Home-Assistant教程"><a href="#Docker安装Home-Assistant教程" class="headerlink" title="Docker安装Home Assistant教程"></a>Docker安装Home Assistant教程</h1><p><strong>1、引言</strong></p>
+<p>在智能家居领域，Home Assistant是一款非常受欢迎的开源自动化平台，它能将各种智能设备集成在一起，实现统一控制和自动化场景设置。而Docker作为一种容器化技术，为安装和部署Home Assistant提供了便捷、高效的方式。本文将详细介绍如何使用Docker安装Home Assistant。</p>
+<p><strong>2、Docker安装Home Assistant步骤</strong></p>
+<ol>
+<li><strong>拉取Home Assistant镜像</strong>：在终端中执行以下命令拉取最新版本的Home Assistant镜像： </li>
+<li>使用国内能访问的镜像地址<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> docker pull dockerpull.cn/homeassistant/home-assistant<br></code></pre></td></tr></table></figure></li>
+<li><strong>创建并运行容器</strong>：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> docker run -d \<br>  --name hass \<br>  -v /opt/ha/homeassistant:/config \<br>  -e TZ=Asia/Shanghai \<br>  -net=host<br>  homeassistant/home-assistant<br></code></pre></td></tr></table></figure>
+上述命令解释：<ul>
+<li><code>-d</code>：表示容器在后台运行。</li>
+<li><code>--name hass</code>：为容器命名为hass</li>
+<li><code>-v  /opt/ha/homeassistant:/config</code>：将主机的<code> /opt/ha/homeassistant</code>目录挂载到容器的<code>/config</code>目录，用于保存Home Assistant的配置文件。</li>
+<li><code>-e TZ=Asia/Shanghai</code>：设置容器的时区为上海时区。</li>
+<li><code>-net=host</code>：将容器的网络模式设置为与主机相同，即容器直接使用主机的网络栈，共享主机的网络接口、IP 地址等网络资源。（使用宿主机网络）</li>
+</ul>
+</li>
+</ol>
+<p><strong>3、安装后的配置</strong></p>
+<ol>
+<li><strong>首次访问</strong>：在浏览器中输入<code>http://主机IP:8123</code>，首次访问会进入Home Assistant的配置向导，按照提示进行配置，包括设置用户名、密码、选择语言等。</li>
+<li><strong>添加设备</strong>：进入Home Assistant界面后，在“配置” - “设备与服务”中添加你的智能设备，支持的设备类型非常多，如小米智能家居设备、飞利浦Hue灯泡等，根据设备类型选择相应的集成方式进行添加。</li>
+<li><strong>自动化设置</strong>：在“自动化”选项中，可以创建各种自动化场景，例如根据时间自动开关灯、根据环境传感器数据自动调节空调等。</li>
+</ol>
+<h1 id="安装HACS的详细指南"><a href="#安装HACS的详细指南" class="headerlink" title="安装HACS的详细指南"></a>安装HACS的详细指南</h1><p><strong>前期准备</strong></p>
+<ol>
+<li><strong>确认Home Assistant环境</strong>：确保你的Home Assistant已经正确安装并可以正常运行。Home Assistant支持多种安装方式，如在树莓派上通过官方镜像安装，或者在虚拟机、Docker容器中部署等。不同的安装环境在后续操作步骤上可能会有细微差异，但基本原理相同。</li>
+<li><strong>网络连接正常</strong>：HACS需要从互联网获取相关资源，所以保证设备处于联网状态，且网络稳定，没有防火墙或网络策略限制Home Assistant访问外部资源。</li>
+</ol>
+<p><strong>安装步骤</strong></p>
+<ol>
+<li><p><strong>下载HACS文件</strong>：</p>
+<ul>
+<li>打开浏览器，访问HACS的官方GitHub仓库：<a target="_blank" rel="noopener" href="https://github.com/hacs/integration">https://github.com/hacs/integration</a> 。</li>
+<li>在GitHub页面中，找到最新版本的发布信息（通常在页面的“Releases”标签下）。点击进入最新版本的发布页面。</li>
+<li>在发布页面中，找到名为“hacs.zip”的文件并下载到本地电脑 （ 注意版本问题，要和HA版本适配）。</li>
+</ul>
+</li>
+<li><p><strong>将HACS文件上传到Home Assistant</strong>：</p>
+<ul>
+<li><p>进入文件编辑器，找到并打开“config”文件夹。在该文件夹中创建一个新文件夹，命名为“custom_components”（如果该文件夹不存在）。然后进入“custom_components”文件夹，点击右上角的“上传文件”按钮，选择你刚才下载的“hacs.zip”文件进行上传。(由于之前启动容器时有挂载，此步骤只需要将文件放到宿主机就挂载文件内)</p>
+</li>
+<li><p><strong>解压HACS文件</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">unzip hacs.zip<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>重启容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> docker restart hass<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<p><strong>安装后的设置与使用</strong></p>
+<ol>
+<li><strong>配置HACS</strong>：安装完成后，进入HACS界面。在HACS界面中，你可以看到多个选项卡，如“集成”“插件”“主题”等。首先点击“设置”选项卡，在这里你可以配置HACS的一些基本设置，如更新频率、是否自动更新等。</li>
+<li><strong>添加自定义集成</strong>：在“集成”选项卡中，点击右下角的“+添加集成”按钮。HACS会从社区仓库中获取可用的集成列表，你可以在搜索框中输入你想要安装的集成名称进行搜索，然后按照提示完成集成的安装和配置。例如，如果你想安装一个自定义的智能家居设备集成，找到对应的集成并点击安装，HACS会自动下载相关文件并将其添加到Home Assistant中。</li>
+<li><strong>管理插件和主题</strong>：在“插件”和“主题”选项卡中，你可以浏览和安装各种社区开发的插件和主题，以扩展Home Assistant的功能和美化界面。安装过程与添加集成类似，找到你喜欢的插件或主题，点击安装按钮即可。</li>
+<li><strong>更新HACS及相关集成</strong>：HACS会定期检查是否有新版本的自身以及已安装的集成可用。你可以在HACS界面中查看更新状态，在有更新时，点击相应的更新按钮即可完成更新操作。保持HACS和集成的更新可以获得新功能、修复漏洞以及提升稳定性。</li>
+</ol>
+<p>通过以上步骤，你应该已经成功安装并初步设置好了HACS，现在你可以尽情探索Home Assistant丰富的社区资源，为你的智能家居系统增添更多强大的功能。 </p>
+<h1 id="通过HACS安装MiHome集成"><a href="#通过HACS安装MiHome集成" class="headerlink" title="通过HACS安装MiHome集成"></a>通过HACS安装MiHome集成</h1><ol>
+<li><p><strong>打开HACS界面</strong>：在Home Assistant的用户界面中，点击侧边栏的“HACS”图标，进入HACS管理页面。</p>
+</li>
+<li><p>后点击右上角几个小点点，选择Custom repositories</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_5/"><img src="https://qnam.smzdm.com/202412/24/676a6f5e8f0123424.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 4、弹出的窗口只有两个选项，分别填写与选择</p>
+<p> Repository: <a target="_blank" rel="noopener" href="https://github.com/XiaoMi/ha_xiaomi_home.git">https://github.com/XiaoMi/ha_xiaomi_home.git</a></p>
+<p> Type: Integration</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_6/"><img src="https://am.zdmimg.com/202412/24/676a7025444501671.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+</li>
+<li><p><strong>等待仓库同步</strong>：添加仓库后，HACS会自动尝试同步该仓库的信息，这可能需要一些时间，取决于网络状况和仓库的大小。在同步过程中，你可以在HACS的“集成”页面看到仓库的状态显示为“正在同步”。</p>
+</li>
+<li><p>现在，已经可以搜索到相关插件了，点击插件最后面的几个小点点，选择Download开始下载</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_7/"><img src="https://qnam.smzdm.com/202412/24/676a7042b59af4263.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a><a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_8/"><img src="https://qnam.smzdm.com/202412/24/676a708c32fb1187.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 6、弹出确认提示按钮，选择右下方的Download</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_9/"><img src="https://am.zdmimg.com/202412/24/676a7017382ca7581.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 7、下载安装完成后，HA主界面提示需要重启，点击完成HA的重启</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_10/"><img src="https://am.zdmimg.com/202412/24/676a7115ac848807.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 8、重新完成，依次选择：设置-》设备与服务，就可以看到Xiaomi Home的插件了</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_11/"><img src="https://am.zdmimg.com/202412/24/676a714fa4b5a7595.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 9、点击添加，弹出风险告知，此时勾选确认，然后点击下一步</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_12/"><img src="https://am.zdmimg.com/202412/24/676a71801d4b28454.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 10、弹出基础配置的相关提示，确认相关信息无误，直接点击下一步</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_13/"><img src="https://qnam.smzdm.com/202412/24/676a7198af1fe8705.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 11、弹出提示登陆的界面，点击一下以打开登陆页面</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_14/"><img src="https://qnam.smzdm.com/202412/24/676a71d870e261860.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 12、输入你的小米账号与密码，点击登陆</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_15/"><img src="https://qnam.smzdm.com/202412/24/676a71ec8493b4544.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 13、此时自动打开跳转页面，但是因为IP地址错误，会提示网页无法打开，不用担心，浏览器里面，把网址的homeassistant.local改成你的HA的IP地址，比如我的是192.168.1.4</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_16/"><img src="https://qnam.smzdm.com/202412/24/676a723dec8ea2034.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a><a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_17/"><img src="https://qnam.smzdm.com/202412/24/676a723d28b072034.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 14、上一步操作无问题的话，就打开跳转页面了，控制模式选择自动，导入的设备根据你的情况选择，房间名同步模式建议选择房间名，然后下一步</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_18/"><img src="https://am.zdmimg.com/202412/24/676a72b799b897547.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 15、此时插件会显示出所有的设备清单，一般这一步无需做太多动作，直接点击完成</p>
+<p> <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/pic_19/"><img src="https://am.zdmimg.com/202412/24/676a72e386f506656.jpg_e1080.jpg" srcset="/img/loading.gif" lazyload alt="小米更新HA插件了，快来看保姆级全流程教程及目前简单对比"></a></p>
+<p> 好的，现在，你家里的所有小米设备，已经完成导入你的HA，而且HA的主界面里，已经根据房间把所有的设备一次性导入。</p>
+</li>
+</ol>
+<h6 id="部署参考连链接："><a href="#部署参考连链接：" class="headerlink" title="部署参考连链接："></a>部署参考连链接：</h6><p>​	接入米家  <a target="_blank" rel="noopener" href="https://post.smzdm.com/p/a8p9og20/">https://post.smzdm.com/p/a8p9og20/</a>	 集成米家 内容粘贴的此处链接内容</p>
+<p>​	HA 部署 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34200979/article/details/135725550">https://blog.csdn.net/qq_34200979/article/details/135725550</a></p>
+<p>​	仅个人学习使用</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/HA/" class="print-no-link">#HA</a>
+      
+    </div>
+  
+</div>
+
+
+              
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/11/12/%E6%9D%82%E4%B9%B1/" title="珠海事件">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">珠海事件</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      
+<a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/hxbycode" target="_blank" rel="nofollow noopener"><span>GitHub</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
